@@ -1,0 +1,18 @@
+# AllCops:
+#   Exclude:
+#     - 'utility_scripts/**/*'
+#     - 'data/**/*'
+#     - '.git/**/*'
+#   SuggestExtensions: false
+# Style/Documentation:
+#   Enabled: false
+# Metrics/BlockLength:
+#   Max: 150
+# Metrics/LineLength:
+#   Max: 100
+# Style/WordArray:
+#   Enabled: false
+# Style/SymbolProc:
+#   Enabled: false
+# Style/FrozenStringLiteralComment:
+#   Enabled: false
