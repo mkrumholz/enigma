@@ -37,7 +37,12 @@ describe Enigma do
     it 'returns a decrypted version of input string with key and date given' do
       enigma = Enigma.new
 
-      expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq 'hello world'
+      expected = {
+        decryption: 'hello world',
+        key: "02715",
+        date: "040895"
+      }
+      expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq expected
     end
   end
 
@@ -144,6 +149,23 @@ describe Enigma do
                   'u', 'v', 'w', 'x',
                   'y', 'z', ' ']
       expect(enigma.letters).to eq expected
+    end
+  end
+
+  describe '#format_return_hash' do
+    it 'formats the return hash' do
+      enigma = Enigma.new
+      encryption = "keder ohulw"
+      key = "02715"
+      date = "040895"
+
+      actual = enigma.format_return_hash(encryption, key, date)
+      expected = {
+        encryption: "keder ohulw",
+        key: "02715",
+        date: "040895"
+      }
+      expect(actual).to eq expected
     end
   end
 end
