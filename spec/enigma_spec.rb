@@ -18,6 +18,14 @@ describe Enigma do
     end
   end
 
+  describe '#decrypt' do
+    it 'returns a decrypted version of input string' do
+      enigma = Enigma.new
+
+      expect(enigma.decrpyt('keder ohulw', '02715', '040895')).to eq 'hello world'
+    end
+  end
+
   describe '#encrypt_by_index' do
     it 'returns an array of encrypted letter indexes' do
       enigma = Enigma.new
