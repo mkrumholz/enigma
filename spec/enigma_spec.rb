@@ -46,6 +46,21 @@ describe Enigma do
     end
   end
 
+  describe '#letters' do
+    it 'creates the array of letters' do
+      enigma = Enigma.new
+
+      expected = ["a", "b", "c", "d",
+                  "e", "f", "g", "h",
+                  "i", "j", "k", "l",
+                  "m", "n", "o", "p",
+                  "q", "r", "s", "t",
+                  "u", "v", "w", "x",
+                  "y", "z", " "]
+      expect(enigma.letters).to eq expected
+    end
+  end
+
   # describe '#generate_key' do
   #   enigma = Enigma.new
   #
