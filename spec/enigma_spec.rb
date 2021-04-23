@@ -15,9 +15,9 @@ describe Enigma do
       enigma = Enigma.new
 
       expected = {
-        encryption: "keder ohulw",
-        key: "02715",
-        date: "040895"
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
       }
       expect(enigma.encrypt('hello world', '02715', '040895')).to eq expected
     end
@@ -27,7 +27,7 @@ describe Enigma do
       allow(Keyable).to receive(:date_today) { '040895' }
 
       expected = {
-        encryption: "keder ohulw",
+        encryption: 'keder ohulw',
         key: '02715',
         date: '040895'
       }
@@ -40,7 +40,7 @@ describe Enigma do
       allow(Keyable).to receive(:date_today) { '040895' }
 
       expected = {
-        encryption: "keder ohulw",
+        encryption: 'keder ohulw',
         key: '02715',
         date: '040895'
       }
@@ -54,8 +54,8 @@ describe Enigma do
 
       expected = {
         decryption: 'hello world',
-        key: "02715",
-        date: "040895"
+        key: '02715',
+        date: '040895'
       }
       expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq expected
     end
@@ -170,15 +170,15 @@ describe Enigma do
   describe '#format_encryption_hash' do
     it 'formats the return hash for #encrypt' do
       enigma = Enigma.new
-      encryption = "keder ohulw"
-      key = "02715"
-      date = "040895"
+      encryption = 'keder ohulw'
+      key = '02715'
+      date = '040895'
 
       actual = enigma.format_encryption_hash(encryption, key, date)
       expected = {
-        encryption: "keder ohulw",
-        key: "02715",
-        date: "040895"
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
       }
       expect(actual).to eq expected
     end
@@ -187,15 +187,15 @@ describe Enigma do
   describe '#format_decryption_hash' do
     it 'formats the return hash for #decrypt' do
       enigma = Enigma.new
-      decryption = "hello world"
-      key = "02715"
-      date = "040895"
+      decryption = 'hello world'
+      key = '02715'
+      date = '040895'
 
       actual = enigma.format_decryption_hash(decryption, key, date)
       expected = {
-        decryption: "hello world",
-        key: "02715",
-        date: "040895"
+        decryption: 'hello world',
+        key: '02715',
+        date: '040895'
       }
       expect(actual).to eq expected
     end

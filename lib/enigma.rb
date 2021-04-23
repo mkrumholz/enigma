@@ -91,7 +91,7 @@ class Enigma
   end
 
   def format_encryption_hash(encryption, key, date)
-    encrypted_message = Hash.new
+    encrypted_message = {}
     encrypted_message[:encryption] = encryption
     encrypted_message[:key] = key
     encrypted_message[:date] = date
@@ -99,7 +99,7 @@ class Enigma
   end
 
   def format_decryption_hash(decryption, key, date)
-    decrypted_message = Hash.new
+    decrypted_message = {}
     decrypted_message[:decryption] = decryption
     decrypted_message[:key] = key
     decrypted_message[:date] = date
