@@ -14,7 +14,7 @@ describe Enigma do
     it 'returns an encrypted version of input string' do
       enigma = Enigma.new
 
-      expect(enigma.encrypt("hello world", "02715", "040895")).to eq "keder ohulw"
+      expect(enigma.encrypt('hello world', '02715', '040895')).to eq 'keder ohulw'
     end
   end
 
@@ -32,7 +32,7 @@ describe Enigma do
   describe '#convert_to_indexes' do
     it 'converts a string into an array of indexes' do
       enigma = Enigma.new
-      message = "hello world"
+      message = 'hello world'
 
       expected = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
       expect(enigma.convert_to_indexes(message)).to eq expected
@@ -44,7 +44,7 @@ describe Enigma do
       enigma = Enigma.new
       index_array = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
 
-      expect(enigma.convert_to_string(index_array)).to eq "keder ohulw"
+      expect(enigma.convert_to_string(index_array)).to eq 'keder ohulw'
     end
   end
 
@@ -75,8 +75,8 @@ describe Enigma do
   describe '#get_shifts' do
     it 'calculates the four shifts' do
       enigma = Enigma.new
-      key = "02715"
-      date = "040895"
+      key = '02715'
+      date = '040895'
 
       expect(enigma.get_shifts(key, date)).to eq [3, 27, 73, 20]
     end
@@ -86,7 +86,7 @@ describe Enigma do
     it 'returns an array of shift Keys' do
       enigma = Enigma.new
 
-      expect(enigma.shift_keys("02715")).to eq [02, 27, 71, 15]
+      expect(enigma.shift_keys('02715')).to eq [0o2, 27, 71, 15]
     end
   end
 
@@ -94,7 +94,7 @@ describe Enigma do
     it 'returns an array of shift Offsets' do
       enigma = Enigma.new
 
-      expect(enigma.shift_offsets("040895")).to eq [1, 0, 2, 5]
+      expect(enigma.shift_offsets('040895')).to eq [1, 0, 2, 5]
     end
   end
 
@@ -102,13 +102,13 @@ describe Enigma do
     it 'creates the array of letters' do
       enigma = Enigma.new
 
-      expected = ["a", "b", "c", "d",
-                  "e", "f", "g", "h",
-                  "i", "j", "k", "l",
-                  "m", "n", "o", "p",
-                  "q", "r", "s", "t",
-                  "u", "v", "w", "x",
-                  "y", "z", " "]
+      expected = ['a', 'b', 'c', 'd',
+                  'e', 'f', 'g', 'h',
+                  'i', 'j', 'k', 'l',
+                  'm', 'n', 'o', 'p',
+                  'q', 'r', 's', 't',
+                  'u', 'v', 'w', 'x',
+                  'y', 'z', ' ']
       expect(enigma.letters).to eq expected
     end
   end
