@@ -16,11 +16,6 @@ class Enigma
 
   # method for generating random 5-digit, zero-padded #s
 
-  # method for finding shift Keys
-    # find the shift Keys
-    # A shift => key[0] + key[1]
-    # B shift => key[1] + key[2]
-    # etc.
   def shift_keys(key)
     digits = key.split("")
     shift_keys = []
@@ -36,6 +31,11 @@ class Enigma
     # A shift += num[0]
     # B shift += num[1]
     # etc.
+  def shift_offsets(date)
+    date_squared = date.to_i**2
+    digits = date_squared.to_s[-4..-1]
+    digits.split("").map { |digit| digit.to_i }
+  end
 
   # method for calculating shifts
     # sum the two arrays
