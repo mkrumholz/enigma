@@ -1,15 +1,6 @@
 class Enigma
 
   def encrypt(message, key, date)
-
-    # use ("a".."z").to_a << " " for array
-    #   new_array = []
-    #   each_with_index { |letter, index| new_array << index }
-    #   this gets us the array of numbers
-    # get_shifts(key, date)
-    # use shifts cyclically to use index of letter (orig) to calculate
-    # index of letter encrypted
-    # add that letter to the final string
     letters = ("a".."z").to_a << " "
     shifts = get_shifts(key, date)
     initial = message.split('')
@@ -36,6 +27,8 @@ class Enigma
   end
 
   # method for generating random 5-digit, zero-padded #s
+  # method for generating random date and converting to string
+
   def get_shifts(key, date)
     keys = shift_keys(key)
     offsets = shift_offsets(date)

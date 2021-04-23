@@ -18,11 +18,29 @@ describe Enigma do
     end
   end
 
+  describe '#find_n' do
+    it 'returns the n value (shift) for the A shift, index 0' do
+      enigma = Enigma.new
+      index = 0
+      shifts = [3, 27, 73, 20]
+
+      expect(enigma.find_n(index, shifts)).to eq 3
+    end
+
+    it 'returns the n value (shift) for any index' do
+      enigma = Enigma.new
+      index = 6
+
+      expect(enigma.find_n(index, shifts)).to eq 73
+    end
+  end
+
   # describe '#generate_key' do
   #   enigma = Enigma.new
   #
   #   expect(enigma.generate_key.length).to eq 5
   # end
+
   describe '#get_shifts' do
     it 'calculates the four shifts' do
       enigma = Enigma.new
