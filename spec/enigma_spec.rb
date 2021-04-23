@@ -11,15 +11,30 @@ describe Enigma do
   end
 
   describe '#encrypt' do
-    it 'returns an encrypted version of input string' do
+    it 'returns an encrypted version of input string with key and date given' do
       enigma = Enigma.new
 
-      expect(enigma.encrypt('hello world', '02715', '040895')).to eq 'keder ohulw'
+      expected = {
+        encryption: "keder ohulw",
+        key: "02715",
+        date: "040895"
+      }
+      expect(enigma.encrypt('hello world', '02715', '040895')).to eq expected
     end
+    # need to test with only date given
+    # test with only key given
+    # test with uppercase letters
+    # test with unexpected characters
+
+    # it 'returns an encrypted version of input string with only date given' do
+    #   enigma = Enigma.new
+    #
+    #   expect(enigma.encrypt('hello world', '02715', '040895')).to eq 'keder ohulw'
+    # end
   end
 
   describe '#decrypt' do
-    it 'returns a decrypted version of input string' do
+    it 'returns a decrypted version of input string with key and date given' do
       enigma = Enigma.new
 
       expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq 'hello world'
