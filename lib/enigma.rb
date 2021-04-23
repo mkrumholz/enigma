@@ -6,12 +6,28 @@ class Enigma
     convert_to_string(encrypted_indexes)
   end
 
+  def decrypt(message, key, date)
+    letter_indexes = convert_to_indexes(message)
+    shifts = get_shifts(key, date)
+    decrypted_indexes = decrypt_by_index(letter_indexes, shifts)
+    convert_to_string(decrypted_indexes)
+  end
+
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
     letter_indexes.map do |char_index|
       n = find_n(index, shifts)
       index += 1
       (char_index + n) % 27
+    end
+  end
+
+  def decrypt_by_index(letter_indexes, shifts)
+    index = 0
+    letter_indexes.map do |char_index|
+      n = find_n(index, shifts)
+      index += 1
+      (char_index - n) % 27
     end
   end
 
