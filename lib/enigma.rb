@@ -1,29 +1,43 @@
 class Enigma
 
   def encrypt(message, key, date)
-    letters = ("a".."z").to_a << " "
+    # letters = ("a".."z").to_a << " "
+    # initial = message.split('')
+    # char_indexes = initial.map do |char|
+    #   letters.find_index(char)
+    # end
+    message_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
-    initial = message.split('')
-    char_indexes = initial.map do |char|
-      letters.find_index(char)
-    end
     index = 0
-    encrypted_indexes = char_indexes.map do |char_index|
-      if index == 0 || index % 4 == 0
-        n = shifts[0]
-      elsif index == 1 || (index - 1) % 4 == 0
-        n = shifts[1]
-      elsif index == 2 || (index - 2) % 4 == 0
-        n = shifts[2]
-      else
-        n = shifts[3]
-      end
+    encrypted_indexes = message_indexes.map do |char_index|
+      n = find_n(index, shifts)
       index += 1
       ( char_index + n ) % 27
     end
+    letters = ("a".."z").to_a << " "
     encrypted_message = encrypted_indexes.map do |index|
       letters[index]
     end.join
+  end
+
+  def convert_to_indexes(message)
+    letters = ("a".."z").to_a << " "
+    message = message.split('')
+    message.map do |letter|
+      letters.find_index(letter)
+    end
+  end
+
+  def find_n(index, shifts)
+    if index == 0 || index % 4 == 0
+      n = shifts[0]
+    elsif index == 1 || (index - 1) % 4 == 0
+      n = shifts[1]
+    elsif index == 2 || (index - 2) % 4 == 0
+      n = shifts[2]
+    else
+      n = shifts[3]
+    end
   end
 
   # method for generating random 5-digit, zero-padded #s
