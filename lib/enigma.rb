@@ -25,12 +25,6 @@ class Enigma
     shift_keys
   end
 
-  # method for finding shift Offsets
-    # find the shift Offsets
-    # num = (date.to_i^^2).to_s/a take [-5 thru -1]
-    # A shift += num[0]
-    # B shift += num[1]
-    # etc.
   def shift_offsets(date)
     date_squared = date.to_i**2
     digits = date_squared.to_s[-4..-1]
@@ -39,6 +33,15 @@ class Enigma
 
   # method for calculating shifts
     # sum the two arrays
+  def get_shifts(key, date)
+    keys = shift_keys(key)
+    offsets = shift_offsets(date)
+    final_shifts = []
+    keys.zip(offsets) do |key, offset|
+      final_shifts << key + offset
+    end
+    final_shifts
+  end
 
 
 end

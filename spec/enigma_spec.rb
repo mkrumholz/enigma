@@ -40,13 +40,13 @@ describe Enigma do
     end
   end
 
-  describe '#four_shifts' do
+  describe '#get_shifts' do
     it 'calculates the four shifts' do
       enigma = Enigma.new
       key = "02715"
       date = "040895"
 
-      expect(enigma.four_shifts(key, date)).to eq [2, 27, 73, 20]
+      expect(enigma.get_shifts(key, date)).to eq [3, 27, 73, 20]
     end
   end
 end
