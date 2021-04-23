@@ -46,6 +46,15 @@ describe Enigma do
     end
   end
 
+  describe '#convert_to_string' do
+    it 'converts an array of indexes into a string' do
+      enigma = Enigma.new
+      index_array = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
+
+      expect(enigma.convert_to_string(index_array)).to eq "keder ohulw"
+    end
+  end
+
   describe '#letters' do
     it 'creates the array of letters' do
       enigma = Enigma.new
