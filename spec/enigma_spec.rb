@@ -152,16 +152,33 @@ describe Enigma do
     end
   end
 
-  describe '#format_return_hash' do
-    it 'formats the return hash' do
+  describe '#format_encryption_hash' do
+    it 'formats the return hash for #encrypt' do
       enigma = Enigma.new
       encryption = "keder ohulw"
       key = "02715"
       date = "040895"
 
-      actual = enigma.format_return_hash(encryption, key, date)
+      actual = enigma.format_encryption_hash(encryption, key, date)
       expected = {
         encryption: "keder ohulw",
+        key: "02715",
+        date: "040895"
+      }
+      expect(actual).to eq expected
+    end
+  end
+
+  describe '#format_decryption_hash' do
+    it 'formats the return hash for #decrypt' do
+      enigma = Enigma.new
+      decryption = "hello world"
+      key = "02715"
+      date = "040895"
+
+      actual = enigma.format_decryption_hash(decryption, key, date)
+      expected = {
+        decryption: "hello world",
         key: "02715",
         date: "040895"
       }

@@ -1,16 +1,22 @@
+require './lib/keyable'
+
 class Enigma
+  include Keyable
+
   def encrypt(message, key, date)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
-    convert_to_string(encrypted_indexes)
+    encryption = convert_to_string(encrypted_indexes)
+    format_encryption_hash(encryption, key, date)
   end
 
   def decrypt(message, key, date)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     decrypted_indexes = decrypt_by_index(letter_indexes, shifts)
-    convert_to_string(decrypted_indexes)
+    decryption = convert_to_string(decrypted_indexes)
+    format_decryption_hash(decryption, key, date)
   end
 
   def encrypt_by_index(letter_indexes, shifts)
@@ -82,5 +88,21 @@ class Enigma
 
   def letters
     ('a'..'z').to_a << ' '
+  end
+
+  def format_encryption_hash(encryption, key, date)
+    encrypted_message = Hash.new
+    encrypted_message[:encryption] = encryption
+    encrypted_message[:key] = key
+    encrypted_message[:date] = date
+    encrypted_message
+  end
+
+  def format_decryption_hash(decryption, key, date)
+    decrypted_message = Hash.new
+    decrypted_message[:decryption] = decryption
+    decrypted_message[:key] = key
+    decrypted_message[:date] = date
+    decrypted_message
   end
 end
