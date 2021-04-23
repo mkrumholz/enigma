@@ -9,19 +9,23 @@ class Enigma
       index += 1
       ( char_index + n ) % 27
     end
-    # letters = ("a".."z").to_a << " "
-    encrypted_message = encrypted_indexes.map do |index|
-      letters[index]
-    end.join
+    # encrypted_message = encrypted_indexes.map do |index|
+    #   letters[index]
+    # end.join
+    convert_to_string(encrypted_indexes)
   end
 
   def convert_to_indexes(message)
-    # letters = ("a".."z").to_a << " "
-    # require "pry"; binding.pry
     message = message.split('')
     message.map do |letter|
       letters.find_index(letter)
     end
+  end
+
+  def convert_to_string(index_array)
+    index_array.map do |index|
+      letters[index]
+    end.join
   end
 
   def letters
