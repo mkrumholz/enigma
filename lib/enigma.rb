@@ -47,7 +47,7 @@ class Enigma
     keys = shift_keys(key)
     offsets = shift_offsets(date)
     final_shifts = []
-    keys.zip(offsets) { |key, offset| final_shifts << key + offset }
+    keys.zip(offsets) { |making_this_a_super_long_variable_for_Hound, offset| final_shifts << making_this_a_super_long_variable_for_Hound + offset }
     final_shifts
   end
 
