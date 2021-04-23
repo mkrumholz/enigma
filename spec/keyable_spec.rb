@@ -17,4 +17,20 @@ describe Keyable do
       expect(key).to eq '00015'
     end
   end
+
+  describe '#date_today' do
+    it 'returns the date formatted as a string' do
+      key = Keyable.date_today
+
+      expect(key).is_a? String
+      expect(key.length).to eq 6
+    end
+
+    it 'properly formats a date' do
+      allow_any_instance_of(Date).to receive(:today) { Date.parse('2021-04-23') }
+      key = Keyable.date_today
+
+      expect(key).to eq '042321'
+    end
+  end
 end
