@@ -10,8 +10,8 @@ describe Enigma do
     end
   end
 
-  describe '#encrpyt' do
-    xit 'returns an encrypted version of input string' do
+  describe '#encrypt' do
+    it 'returns an encrypted version of input string' do
       enigma = Enigma.new
 
       expect(enigma.encrypt("hello world", "02715", "040895")).to eq "keder ohulw"
@@ -23,6 +23,15 @@ describe Enigma do
   #
   #   expect(enigma.generate_key.length).to eq 5
   # end
+  describe '#get_shifts' do
+    it 'calculates the four shifts' do
+      enigma = Enigma.new
+      key = "02715"
+      date = "040895"
+
+      expect(enigma.get_shifts(key, date)).to eq [3, 27, 73, 20]
+    end
+  end
 
   describe '#shift_keys' do
     it 'returns an array of shift Keys' do
@@ -37,16 +46,6 @@ describe Enigma do
       enigma = Enigma.new
 
       expect(enigma.shift_offsets("040895")).to eq [1, 0, 2, 5]
-    end
-  end
-
-  describe '#get_shifts' do
-    it 'calculates the four shifts' do
-      enigma = Enigma.new
-      key = "02715"
-      date = "040895"
-
-      expect(enigma.get_shifts(key, date)).to eq [3, 27, 73, 20]
     end
   end
 end
