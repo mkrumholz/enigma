@@ -39,4 +39,14 @@ describe Enigma do
       expect(enigma.shift_offsets("040895")).to eq [1, 0, 2, 5]
     end
   end
+
+  describe '#four_shifts' do
+    it 'calculates the four shifts' do
+      enigma = Enigma.new
+      key = "02715"
+      date = "040895"
+
+      expect(enigma.four_shifts(key, date)).to eq [2, 27, 73, 20]
+    end
+  end
 end
