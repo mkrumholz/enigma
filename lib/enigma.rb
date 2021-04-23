@@ -21,6 +21,14 @@ class Enigma
     # A shift => key[0] + key[1]
     # B shift => key[1] + key[2]
     # etc.
+  def shift_keys(key)
+    digits = key.split("")
+    shift_keys = []
+    digits.each_cons(2) do |pair|
+      shift_keys << pair.join.to_i
+    end
+    shift_keys
+  end
 
   # method for finding shift Offsets
     # find the shift Offsets
