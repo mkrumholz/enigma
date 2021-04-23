@@ -30,8 +30,19 @@ describe Enigma do
     it 'returns the n value (shift) for any index' do
       enigma = Enigma.new
       index = 6
+      shifts = [3, 27, 73, 20]
 
       expect(enigma.find_n(index, shifts)).to eq 73
+    end
+  end
+
+  describe '#convert_to_indexes' do
+    it 'converts a string into an array of indexes' do
+      enigma = Enigma.new
+      message = "hello world"
+
+      expected = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
+      expect(enigma.convert_to_indexes(message)).to eq expected
     end
   end
 
