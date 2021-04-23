@@ -63,7 +63,7 @@ class Enigma
     keys = shift_keys(key)
     offsets = shift_offsets(date)
     final_shifts = []
-    keys.zip(offsets) { |key, offset| final_shifts << key + offset }
+    keys.zip(offsets) { |shift_key, offset| final_shifts << shift_key + offset }
     final_shifts
   end
 
