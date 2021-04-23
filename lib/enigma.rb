@@ -3,7 +3,7 @@ require './lib/keyable'
 class Enigma
   include Keyable
 
-  def encrypt(message, key, date)
+  def encrypt(message, key = Keyable.random_key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
@@ -11,7 +11,7 @@ class Enigma
     format_encryption_hash(encryption, key, date)
   end
 
-  def decrypt(message, key, date)
+  def decrypt(message, key = Keyable.random_key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     decrypted_indexes = decrypt_by_index(letter_indexes, shifts)

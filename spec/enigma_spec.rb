@@ -21,16 +21,31 @@ describe Enigma do
       }
       expect(enigma.encrypt('hello world', '02715', '040895')).to eq expected
     end
-    # need to test with only date given
-    # test with only key given
-    # test with uppercase letters
-    # test with unexpected characters
 
-    # it 'returns an encrypted version of input string with only date given' do
-    #   enigma = Enigma.new
-    #
-    #   expect(enigma.encrypt('hello world', '02715', '040895')).to eq 'keder ohulw'
-    # end
+    it 'returns an encrypted version of input string with message and key given' do
+      enigma = Enigma.new
+      allow(Keyable).to receive(:date_today) { '040895' }
+
+      expected = {
+        encryption: "keder ohulw",
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hello world', '02715')).to eq expected
+    end
+
+    it 'returns an encrypted version of input string with only message given' do
+      enigma = Enigma.new
+      allow(Keyable).to receive(:random_key) { '02715' }
+      allow(Keyable).to receive(:date_today) { '040895' }
+
+      expected = {
+        encryption: "keder ohulw",
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hello world')).to eq expected
+    end
   end
 
   describe '#decrypt' do
