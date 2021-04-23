@@ -3,12 +3,6 @@ class Enigma
   def encrypt(message, key, date)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
-    # index = 0
-    # encrypted_indexes = letter_indexes.map do |char_index|
-    #   n = find_n(index, shifts)
-    #   index += 1
-    #   ( char_index + n ) % 27
-    # end
     encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
     convert_to_string(encrypted_indexes)
   end
@@ -35,10 +29,6 @@ class Enigma
     end.join
   end
 
-  def letters
-    ("a".."z").to_a << " "
-  end
-
   def find_n(index, shifts)
     if index == 0 || index % 4 == 0
       n = shifts[0]
@@ -58,18 +48,14 @@ class Enigma
     keys = shift_keys(key)
     offsets = shift_offsets(date)
     final_shifts = []
-    keys.zip(offsets) do |key, offset|
-      final_shifts << key + offset
-    end
+    keys.zip(offsets) { |key, offset| final_shifts << key + offset }
     final_shifts
   end
 
   def shift_keys(key)
     digits = key.split("")
     shift_keys = []
-    digits.each_cons(2) do |pair|
-      shift_keys << pair.join.to_i
-    end
+    digits.each_cons(2) { |pair| shift_keys << pair.join.to_i }
     shift_keys
   end
 
@@ -77,5 +63,9 @@ class Enigma
     date_squared = date.to_i**2
     digits = date_squared.to_s[-4..-1]
     digits.split("").map { |digit| digit.to_i }
+  end
+
+  def letters
+    ("a".."z").to_a << " "
   end
 end
