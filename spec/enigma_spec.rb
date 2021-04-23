@@ -9,4 +9,10 @@ describe Enigma do
       expect(enigma).is_a? Enigma
     end
   end
+
+  describe '#encrpyt' do
+    enigma = Enigma.new
+
+    expect(engima.encrypt("hello world", "02715", "040895")).to eq "keder ohulw"
+  end
 end
