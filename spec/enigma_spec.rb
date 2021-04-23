@@ -55,6 +55,17 @@ describe Enigma do
     end
   end
 
+  describe '#encrypt_by_index' do
+    it 'returns an array of encrypted letter indexes' do
+      enigma = Enigma.new
+      shifts = [3, 27, 73, 20]
+      letter_indexes = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
+
+      expected = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
+      expect(enigma.encrypt_by_index(letter_indexes, shifts)).to eq expected
+    end
+  end
+
   describe '#letters' do
     it 'creates the array of letters' do
       enigma = Enigma.new
