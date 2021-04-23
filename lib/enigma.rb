@@ -1,18 +1,25 @@
 class Enigma
 
   def encrypt(message, key, date)
-    message_indexes = convert_to_indexes(message)
+    letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
+    # index = 0
+    # encrypted_indexes = letter_indexes.map do |char_index|
+    #   n = find_n(index, shifts)
+    #   index += 1
+    #   ( char_index + n ) % 27
+    # end
+    encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
+    convert_to_string(encrypted_indexes)
+  end
+
+  def encrypt_by_index(letter_indexes, shifts)
     index = 0
-    encrypted_indexes = message_indexes.map do |char_index|
+    letter_indexes.map do |char_index|
       n = find_n(index, shifts)
       index += 1
       ( char_index + n ) % 27
     end
-    # encrypted_message = encrypted_indexes.map do |index|
-    #   letters[index]
-    # end.join
-    convert_to_string(encrypted_indexes)
   end
 
   def convert_to_indexes(message)
