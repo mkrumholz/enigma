@@ -27,7 +27,7 @@ describe Keyable do
     end
 
     it 'properly formats a date' do
-      allow_any_instance_of(Date).to receive(:today) { Date.parse('2021-04-23') }
+      allow(Date).to receive(:today) { Date.parse('2021-04-23') }
       key = Keyable.date_today
 
       expect(key).to eq '042321'
