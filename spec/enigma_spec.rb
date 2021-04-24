@@ -57,6 +57,17 @@ describe Enigma do
       }
       expect(enigma.encrypt('hEllo WorLd', '02715', '040895')).to eq expected
     end
+
+    it 'can handle unexpected characters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        encryption: 'kede0 ohulw!',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hEll0 WorLd!', '02715', '040895')).to eq expected
+    end
   end
 
   describe '#decrypt' do
@@ -92,6 +103,17 @@ describe Enigma do
         date: '040895'
       }
       expect(enigma.decrypt('keDer oHulw', '02715', '040895')).to eq expected
+    end
+
+    it 'can handle unexpected characters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        decryption: 'hell0 world!',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.decrypt('keDe0 oHulw!', '02715', '040895')).to eq expected
     end
   end
 
