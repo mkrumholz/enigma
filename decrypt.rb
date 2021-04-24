@@ -10,4 +10,5 @@ details = enigma.decrypt(message, ARGV[2], ARGV[3])
 
 File.write(ARGV[1], details[:decryption])
 
-p "Created '#{ARGV[1]}' with the key #{details[:key]} and date #{details[:date]}"
+p "Created '#{ARGV[1]}' with the key" +
+  " #{details[:key]} and date #{details[:date]}"
