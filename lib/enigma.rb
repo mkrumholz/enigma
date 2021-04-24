@@ -75,7 +75,7 @@ class Enigma
       shifts[2] => ((index - 2) % 4),
       shifts[3] => ((index - 3) % 4)
     }
-    n = shifts.find {|shift| shift_parameters[shift].zero?}
+    shifts.find { |shift| shift_parameters[shift].zero? }
   end
 
   def get_shifts(key, date)
