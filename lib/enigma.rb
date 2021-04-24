@@ -69,15 +69,13 @@ class Enigma
   end
 
   def find_n(index, shifts)
-    if (index % 4).zero?
-      shifts[0]
-    elsif ((index - 1) % 4).zero?
-      shifts[1]
-    elsif ((index - 2) % 4).zero?
-      shifts[2]
-    else
-      shifts[3]
-    end
+    shift_parameters = {
+      shifts[0] => (index % 4),
+      shifts[1] => ((index - 1) % 4),
+      shifts[2] => ((index - 2) % 4),
+      shifts[3] => ((index - 3) % 4)
+    }
+    shifts.find { |shift| shift_parameters[shift].zero? }
   end
 
   def get_shifts(key, date)
