@@ -38,7 +38,7 @@ class Enigma
   end
 
   def convert_to_indexes(message)
-    message = message.chars
+    message = message.downcase.chars
     message.map do |letter|
       letters.find_index(letter)
     end
