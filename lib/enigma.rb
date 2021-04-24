@@ -21,32 +21,50 @@ class Enigma
 
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
-    letter_indexes.map do |char_index|
-      n = find_n(index, shifts)
-      index += 1
-      (char_index + n) % 27
+    k = letter_indexes.map do |char_index|
+      if char_index.is_a? String
+        index += 1
+        char_index
+      else
+        n = find_n(index, shifts)
+        index += 1
+        (char_index + n) % 27
+      end
     end
   end
 
   def decrypt_by_index(letter_indexes, shifts)
     index = 0
     letter_indexes.map do |char_index|
-      n = find_n(index, shifts)
-      index += 1
-      (char_index - n) % 27
+      if char_index.is_a? String
+        index += 1
+        char_index
+      else
+        n = find_n(index, shifts)
+        index += 1
+        (char_index - n) % 27
+      end
     end
   end
 
   def convert_to_indexes(message)
     message = message.downcase.chars
     message.map do |letter|
-      letters.find_index(letter)
+      if !letters.include?(letter)
+        letter
+      else
+        letters.find_index(letter)
+      end
     end
   end
 
   def convert_to_string(index_array)
     index_array.map do |index|
-      letters[index]
+      if index.is_a? String
+        index
+      else
+        letters[index]
+      end
     end.join
   end
 
