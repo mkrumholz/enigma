@@ -7,21 +7,23 @@ class Enigma
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
-    encryption = convert_to_string(encrypted_indexes)
-    format_encryption_hash(encryption, key, date)
+    { encryption: convert_to_string(encrypted_indexes),
+      key: key,
+      date: date }
   end
 
   def decrypt(message, key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     decrypted_indexes = decrypt_by_index(letter_indexes, shifts)
-    decryption = convert_to_string(decrypted_indexes)
-    format_decryption_hash(decryption, key, date)
+    { decryption: convert_to_string(decrypted_indexes),
+      key: key,
+      date: date }
   end
 
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
-    k = letter_indexes.map do |char_index|
+    letter_indexes.map do |char_index|
       if char_index.is_a? String
         index += 1
         char_index
@@ -50,10 +52,10 @@ class Enigma
   def convert_to_indexes(message)
     message = message.downcase.chars
     message.map do |letter|
-      if !letters.include?(letter)
-        letter
-      else
+      if letters.include?(letter)
         letters.find_index(letter)
+      else
+        letter
       end
     end
   end
@@ -69,11 +71,11 @@ class Enigma
   end
 
   def find_n(index, shifts)
-    if index.zero? || (index % 4).zero?
+    if (index % 4).zero?
       shifts[0]
-    elsif index == 1 || ((index - 1) % 4).zero?
+    elsif ((index - 1) % 4).zero?
       shifts[1]
-    elsif index == 2 || ((index - 2) % 4).zero?
+    elsif ((index - 2) % 4).zero?
       shifts[2]
     else
       shifts[3]
@@ -103,17 +105,5 @@ class Enigma
 
   def letters
     ('a'..'z').to_a << ' '
-  end
-
-  def format_encryption_hash(encryption, key, date)
-    { encryption: encryption,
-      key: key,
-      date: date }
-  end
-
-  def format_decryption_hash(decryption, key, date)
-    { decryption: decryption,
-      key: key,
-      date: date }
   end
 end
