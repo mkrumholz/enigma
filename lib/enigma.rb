@@ -11,7 +11,7 @@ class Enigma
     format_encryption_hash(encryption, key, date)
   end
 
-  def decrypt(message, key = Keyable.random_key, date = Keyable.date_today)
+  def decrypt(message, key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     decrypted_indexes = decrypt_by_index(letter_indexes, shifts)

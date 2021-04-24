@@ -11,7 +11,7 @@ describe Enigma do
   end
 
   describe '#encrypt' do
-    it 'returns an encrypted version of input string with key and date given' do
+    it 'returns an encrypted version of input with key and date given' do
       enigma = Enigma.new
 
       expected = {
@@ -22,7 +22,7 @@ describe Enigma do
       expect(enigma.encrypt('hello world', '02715', '040895')).to eq expected
     end
 
-    it 'returns an encrypted version of input string with message and key given' do
+    it 'returns an encrypted version of input with message and key given' do
       enigma = Enigma.new
       allow(Keyable).to receive(:date_today) { '040895' }
 
@@ -34,7 +34,7 @@ describe Enigma do
       expect(enigma.encrypt('hello world', '02715')).to eq expected
     end
 
-    it 'returns an encrypted version of input string with only message given' do
+    it 'returns an encrypted version of input with only message given' do
       enigma = Enigma.new
       allow(Keyable).to receive(:random_key) { '02715' }
       allow(Keyable).to receive(:date_today) { '040895' }
@@ -58,6 +58,18 @@ describe Enigma do
         date: '040895'
       }
       expect(enigma.decrypt('keder ohulw', '02715', '040895')).to eq expected
+    end
+
+    it 'returns an decrypted version of input with message and key given' do
+      enigma = Enigma.new
+      allow(Keyable).to receive(:date_today) { '040895' }
+
+      expected = {
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hello world', '02715')).to eq expected
     end
   end
 
