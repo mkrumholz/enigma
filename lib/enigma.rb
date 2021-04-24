@@ -23,28 +23,26 @@ class Enigma
 
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
-    letter_indexes.map do |char_index|
-      if char_index.is_a? String
-        index += 1
-        char_index
+    letter_indexes.map do |letter_index|
+      n = find_n(index, shifts)
+      index += 1
+      if letter_index.is_a? String
+        letter_index
       else
-        n = find_n(index, shifts)
-        index += 1
-        (char_index + n) % 27
+        (letter_index + n) % 27
       end
     end
   end
 
   def decrypt_by_index(letter_indexes, shifts)
     index = 0
-    letter_indexes.map do |char_index|
-      if char_index.is_a? String
-        index += 1
-        char_index
+    letter_indexes.map do |letter_index|
+      n = find_n(index, shifts)
+      index += 1
+      if letter_index.is_a? String
+        letter_index
       else
-        n = find_n(index, shifts)
-        index += 1
-        (char_index - n) % 27
+        (letter_index - n) % 27
       end
     end
   end
