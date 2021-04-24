@@ -46,6 +46,28 @@ describe Enigma do
       }
       expect(enigma.encrypt('hello world')).to eq expected
     end
+
+    it 'can handle uppercase letters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hEllo WorLd', '02715', '040895')).to eq expected
+    end
+
+    it 'can handle unexpected characters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        encryption: 'kede0 ohulw!',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hEll0 WorLd!', '02715', '040895')).to eq expected
+    end
   end
 
   describe '#decrypt' do
@@ -65,11 +87,33 @@ describe Enigma do
       allow(Keyable).to receive(:date_today) { '040895' }
 
       expected = {
-        encryption: 'keder ohulw',
+        decryption: 'hello world',
         key: '02715',
         date: '040895'
       }
-      expect(enigma.encrypt('hello world', '02715')).to eq expected
+      expect(enigma.decrypt('keder ohulw', '02715')).to eq expected
+    end
+
+    it 'can handle uppercase letters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        decryption: 'hello world',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.decrypt('keDer oHulw', '02715', '040895')).to eq expected
+    end
+
+    it 'can handle unexpected characters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        decryption: 'hell0 world!',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.decrypt('keDe0 oHulw!', '02715', '040895')).to eq expected
     end
   end
 
@@ -163,43 +207,9 @@ describe Enigma do
       enigma = Enigma.new
 
       expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-                  'j', 'k', 'l', 'm', 'n', 'o', 'p','q', 'r',
+                  'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r',
                   's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ']
       expect(enigma.letters).to eq expected
-    end
-  end
-
-  describe '#format_encryption_hash' do
-    it 'formats the return hash for #encrypt' do
-      enigma = Enigma.new
-      encryption = 'keder ohulw'
-      key = '02715'
-      date = '040895'
-
-      actual = enigma.format_encryption_hash(encryption, key, date)
-      expected = {
-        encryption: 'keder ohulw',
-        key: '02715',
-        date: '040895'
-      }
-      expect(actual).to eq expected
-    end
-  end
-
-  describe '#format_decryption_hash' do
-    it 'formats the return hash for #decrypt' do
-      enigma = Enigma.new
-      decryption = 'hello world'
-      key = '02715'
-      date = '040895'
-
-      actual = enigma.format_decryption_hash(decryption, key, date)
-      expected = {
-        decryption: 'hello world',
-        key: '02715',
-        date: '040895'
-      }
-      expect(actual).to eq expected
     end
   end
 end

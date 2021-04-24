@@ -7,55 +7,73 @@ class Enigma
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
-    encryption = convert_to_string(encrypted_indexes)
-    format_encryption_hash(encryption, key, date)
+    { encryption: convert_to_string(encrypted_indexes),
+      key: key,
+      date: date }
   end
 
   def decrypt(message, key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
     decrypted_indexes = decrypt_by_index(letter_indexes, shifts)
-    decryption = convert_to_string(decrypted_indexes)
-    format_decryption_hash(decryption, key, date)
+    { decryption: convert_to_string(decrypted_indexes),
+      key: key,
+      date: date }
   end
 
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
-    letter_indexes.map do |char_index|
+    letter_indexes.map do |letter_index|
       n = find_n(index, shifts)
       index += 1
-      (char_index + n) % 27
+      if letter_index.is_a? String
+        letter_index
+      else
+        (letter_index + n) % 27
+      end
     end
   end
 
   def decrypt_by_index(letter_indexes, shifts)
     index = 0
-    letter_indexes.map do |char_index|
+    letter_indexes.map do |letter_index|
       n = find_n(index, shifts)
       index += 1
-      (char_index - n) % 27
+      if letter_index.is_a? String
+        letter_index
+      else
+        (letter_index - n) % 27
+      end
     end
   end
 
   def convert_to_indexes(message)
-    message = message.chars
+    message = message.downcase.chars
     message.map do |letter|
-      letters.find_index(letter)
+      if letters.include?(letter)
+        letters.find_index(letter)
+      else
+        letter
+      end
     end
   end
 
   def convert_to_string(index_array)
     index_array.map do |index|
-      letters[index]
+      if index.is_a? String
+        index
+      else
+        letters[index]
+      end
     end.join
   end
 
   def find_n(index, shifts)
-    if index.zero? || (index % 4).zero?
+    if (index % 4).zero?
       shifts[0]
-    elsif index == 1 || ((index - 1) % 4).zero?
+    elsif ((index - 1) % 4).zero?
       shifts[1]
-    elsif index == 2 || ((index - 2) % 4).zero?
+    elsif ((index - 2) % 4).zero?
       shifts[2]
     else
       shifts[3]
@@ -85,21 +103,5 @@ class Enigma
 
   def letters
     ('a'..'z').to_a << ' '
-  end
-
-  def format_encryption_hash(encryption, key, date)
-    encrypted_message = {}
-    encrypted_message[:encryption] = encryption
-    encrypted_message[:key] = key
-    encrypted_message[:date] = date
-    encrypted_message
-  end
-
-  def format_decryption_hash(decryption, key, date)
-    decrypted_message = {}
-    decrypted_message[:decryption] = decryption
-    decrypted_message[:key] = key
-    decrypted_message[:date] = date
-    decrypted_message
   end
 end
