@@ -46,6 +46,17 @@ describe Enigma do
       }
       expect(enigma.encrypt('hello world')).to eq expected
     end
+
+    it 'can handle uppercase letters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        encryption: 'keder ohulw',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.encrypt('hEllo WorLd', '02715', '040895')).to eq expected
+    end
   end
 
   describe '#decrypt' do
@@ -65,11 +76,22 @@ describe Enigma do
       allow(Keyable).to receive(:date_today) { '040895' }
 
       expected = {
-        encryption: 'keder ohulw',
+        decryption: 'hello world',
         key: '02715',
         date: '040895'
       }
-      expect(enigma.encrypt('hello world', '02715')).to eq expected
+      expect(enigma.decrypt('keder ohulw', '02715')).to eq expected
+    end
+
+    it 'can handle uppercase letters in input string' do
+      enigma = Enigma.new
+
+      expected = {
+        decryption: 'hello world',
+        key: '02715',
+        date: '040895'
+      }
+      expect(enigma.decrypt('keDer oHulw', '02715', '040895')).to eq expected
     end
   end
 
