@@ -120,12 +120,6 @@ describe Enigma do
     end
   end
 
-  # describe '#generate_key' do
-  #   enigma = Enigma.new
-  #
-  #   expect(enigma.generate_key.length).to eq 5
-  # end
-
   describe '#get_shifts' do
     it 'calculates the four shifts' do
       enigma = Enigma.new
@@ -156,13 +150,9 @@ describe Enigma do
     it 'creates the array of letters' do
       enigma = Enigma.new
 
-      expected = ['a', 'b', 'c', 'd',
-                  'e', 'f', 'g', 'h',
-                  'i', 'j', 'k', 'l',
-                  'm', 'n', 'o', 'p',
-                  'q', 'r', 's', 't',
-                  'u', 'v', 'w', 'x',
-                  'y', 'z', ' ']
+      expected = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
+                  'j', 'k', 'l', 'm', 'n', 'o', 'p','q', 'r',
+                  's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' ']
       expect(enigma.letters).to eq expected
     end
   end

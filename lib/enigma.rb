@@ -62,9 +62,6 @@ class Enigma
     end
   end
 
-  # method for generating random 5-digit, zero-padded #s
-  # method for generating random date and converting to string
-
   def get_shifts(key, date)
     keys = shift_keys(key)
     offsets = shift_offsets(date)
