@@ -122,7 +122,7 @@ describe Enigma do
       enigma = Enigma.new
 
       expected = {
-        decryption: 'vjqtbeaweqihssi',
+        decryption: 'hello world end',
         key: '08304',
         date: '291018'
       }
