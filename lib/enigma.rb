@@ -21,6 +21,84 @@ class Enigma
       date: date }
   end
 
+  def crack(message, date = Keyable.date_today)
+    # find the key
+    # can get the shift offsets from the date
+    # then use the word "end" (last 4 char)
+    # to find the shifts overall
+    # then I can go back using those to find the key
+    # then use those shifts to decrypt using the decrypt method
+    last_four = message[-4..].split('')
+    base_shifts = []
+    last_four.zip(' end'.split('')) do |pair|
+      encrypted = letters.find_index(pair[0])
+      decrypted = letters.find_index(pair[1])
+      base_shifts << encrypted - decrypted
+    end
+    shift_position = 4 - (message.length % 4)
+    shifts = base_shifts.rotate(shift_position)
+
+    letter_indexes = convert_to_indexes(message)
+    decryption = decrypt_by_index(letter_indexes, shifts)
+
+    offsets = shift_offsets(date)
+    normalized = shifts.map do |shift|
+      while shift < 0
+        shift += 27
+      end
+      while shift > 27
+        shift -= 27
+      end
+        shift
+    end
+    keys = []
+    normalized.zip(offsets) do |pair|
+      shift_key = pair[0] - pair [1]
+      keys << shift_key
+    end
+
+    set = (0..100).to_a
+    possible_keys = keys.map do |key|
+      set.find_all do |num|
+        num % 27 == key
+      end
+    end
+    string_keys = possible_keys.map do |array|
+      array.map {|shift| shift.to_s.rjust(2, '0')}
+    end
+    final_keys = []
+    a = string_keys[0].find do |key_a|
+      string_keys[1].find do |key_b|
+        string_keys[2].find do |key_c|
+          string_keys[3].find do |key_d|
+            key_a[1] == key_b[0] && key_b[1] == key_c[0] && key_c[1] == key_d[0]
+          end
+        end
+      end
+    end
+    final_keys << a
+    b = string_keys[1].find do |key_b|
+      string_keys[2].find do |key_c|
+        string_keys[3].find do |key_d|
+          a[1] == key_b[0] && key_b[1] == key_c[0] && key_c[1] == key_d[0]
+        end
+      end
+    end
+    final_keys << b
+    c = string_keys[2].find do |key_c|
+      string_keys[3].find do |key_d|
+        a[1] == b[0] && b[1] == key_c[0] && key_c[1] == key_d[0]
+      end
+    end
+    final_keys << c
+    d = string_keys[3].find do |key_d|
+      a[1] == b[0] && b[1] == c[0] && c[1] == key_d[0]
+    end
+    final_keys << d
+    key = final_keys[0] + final_keys[1][1] + final_keys[2][1] + final_keys[3][1]
+    decrypt(message, key, date)
+  end
+
   def encrypt_by_index(letter_indexes, shifts)
     index = 0
     letter_indexes.map do |letter_index|
@@ -69,13 +147,26 @@ class Enigma
   end
 
   def find_n(index, shifts)
-    shift_parameters = {
-      shifts[0] => (index % 4),
-      shifts[1] => ((index - 1) % 4),
-      shifts[2] => ((index - 2) % 4),
-      shifts[3] => ((index - 3) % 4)
-    }
-    shifts.find { |shift| shift_parameters[shift].zero? }
+    # shift_parameters = {
+    #   0 => (index % 4),
+    #   1 => ((index - 1) % 4),
+    #   2 => ((index - 2) % 4),
+    #   3 => ((index - 3) % 4)
+    # }
+    # shift_index = 0
+    # shifts.find do |shift|
+    #   shift_parameters[shift_index].zero?
+    #   shift_index += 1
+    # end
+    if (index % 4).zero?
+      shifts[0]
+    elsif ((index - 1) % 4).zero?
+      shifts[1]
+    elsif ((index - 2) % 4).zero?
+      shifts[2]
+    else
+      shifts[3]
+    end
   end
 
   def get_shifts(key, date)
