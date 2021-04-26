@@ -3,7 +3,7 @@ require './lib/enigma'
 require './lib/key_breaker'
 
 describe Enigma do
-  before:each do
+  before :each do
     @enigma = Enigma.new
   end
 
@@ -96,7 +96,6 @@ describe Enigma do
     end
 
     it 'can handle unexpected characters in input string' do
-
       expected = {
         decryption: 'hell0 world!',
         key: '02715',
