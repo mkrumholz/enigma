@@ -22,21 +22,8 @@ class Enigma
   end
 
   def crack(message, date = Keyable.date_today)
-    # last_four = message[-4..].split('')
-    # base_shifts = []
-    # last_four.zip(' end'.split('')) do |pair|
-    #   encrypted = letters.find_index(pair[0])
-    #   decrypted = letters.find_index(pair[1])
-    #   base_shifts << encrypted - decrypted
-    # end
-    # shift_position = 4 - (message.length % 4)
-    # shifts = base_shifts.rotate(shift_position)
     codebreaker = ' end'
     shifts = shifts_from_codebreaker(message, codebreaker)
-
-    letter_indexes = convert_to_indexes(message)
-    decryption = decrypt_by_index(letter_indexes, shifts)
-
     key = get_key(shifts, date)
     decrypt(message, key, date)
   end
@@ -106,25 +93,26 @@ class Enigma
     last_four.zip(codebreaker.split('')) do |pair|
       encrypted = letters.find_index(pair[0])
       decrypted = letters.find_index(pair[1])
-      base_shifts << encrypted - decrypted
+      base_shifts << encrypted- decrypted
     end
     shift_position = 4 - (message.length % 4)
     base_shifts.rotate(shift_position)
-  end 
+  end
 
   def get_key(shifts, date)
     offsets = shift_offsets(date)
-    normalized_keys = shifts.map do |shift|
-      while shift < 0
-        shift += 27
-      end
-      while shift > 27
-        shift -= 27
-      end
-        shift
-    end
+    # normalized_keys = shifts.map do |shift|
+    #   while shift < 0
+    #     shift += 27
+    #   end
+    #   while shift > 27
+    #     shift -= 27
+    #   end
+    #     shift
+    # end
+    normalized_shifts = normalize(shifts)
     keys = []
-    normalized_keys.zip(offsets) do |pair|
+    normalized_shifts.zip(offsets) do |pair|
       shift_key = pair[0] - pair [1]
       keys << shift_key
     end
@@ -172,6 +160,18 @@ class Enigma
     end
     final_keys << d
     final_keys[0] + final_keys[1][1] + final_keys[2][1] + final_keys[3][1]
+  end
+
+  def normalize(shifts)
+    shifts.map do |shift|
+      while shift < 0
+        shift += 27
+      end
+      while shift > 27
+        shift -= 27
+      end
+      shift
+    end
   end
 
   def get_shifts(key, date)
