@@ -23,7 +23,8 @@ class Enigma
 
   def crack(message, date = Keyable.date_today)
     codebreaker = ' end'
-    shifts = shifts_from_codebreaker(message, codebreaker)
+    sanitized_message = message.delete("\n")
+    shifts = shifts_from_codebreaker(sanitized_message, codebreaker)
     offsets = shift_offsets(date)
     key = KeyBreaker.find_key(shifts, offsets)
     decrypt(message, key, date)

@@ -1,6 +1,7 @@
 require 'date'
 require './lib/enigma'
 require './lib/keyable'
+require './lib/key_breaker'
 
 enigma = Enigma.new
 
