@@ -1,5 +1,4 @@
 class KeyBreaker
-
   def self.find_key(shifts, offsets)
     keys = find_shift_keys(shifts, offsets)
     keys[:A] + keys[:B][1] + keys[:C][1] + keys[:D][1]
@@ -32,12 +31,7 @@ class KeyBreaker
     set = (0..100).to_a
     base_keys.map do |key|
       possible_keys = set.find_all do |num|
-        num % 27 == key
-      end
-      if possible_keys.length.zero?
-        [27]
-      else
-        possible_keys
+        key % 27 == num % 27
       end
     end
   end
