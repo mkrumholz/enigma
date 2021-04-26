@@ -213,8 +213,9 @@ describe Enigma do
       message = 'vjqtbeaweqihssi'
       codebreaker = ' end'
 
+      actual = enigma.shifts_from_codebreaker(message, codebreaker)
       expected = [14, 5, 5, -19]
-      expect(enigma.shifts_from_codebreaker(message, codebreaker)).to eq expected
+      expect(actual).to eq expected
     end
   end
 
