@@ -200,13 +200,13 @@ describe Enigma do
     end
   end
 
-  describe '#get_key' do
+  describe '#find_key' do
     it 'calculates the key from the date and shifts' do
       enigma = Enigma.new
       shifts = [14, 5, 5, -19]
       date = '291018'
 
-      expect(enigma.get_key(shifts, date)).to eq '08304'
+      expect(enigma.find_key(shifts, date)).to eq '08304'
     end
 
     it 'works for any combination of shifts and date' do
@@ -214,7 +214,7 @@ describe Enigma do
       shifts = [3, 27, 73, 20]
       date = '040895'
 
-      expect(enigma.get_key(shifts, date)).to eq '02715'
+      expect(enigma.find_key(shifts, date)).to eq '02715'
     end
   end
 
@@ -224,6 +224,17 @@ describe Enigma do
       shifts = [14, 5, 5, -19]
 
       expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
+    end
+  end
+
+  describe '#find_shift_keys' do
+    it 'finds shift keys using shifts and offsets' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+      offsets = [6, 3, 2, 4]
+
+      expected = ["08", "83", "30", "04"]
+      expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
     end
   end
 
