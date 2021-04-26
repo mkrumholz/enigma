@@ -88,7 +88,7 @@ class Enigma
   end
 
   def shifts_from_codebreaker(message, codebreaker)
-    last_four = message[-4..].chars
+    last_four = message[-4..-1].chars
     base_shifts = []
     last_four.zip(codebreaker.chars) do |pair|
       encrypted = letters.find_index(pair[0])
