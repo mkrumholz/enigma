@@ -33,24 +33,24 @@ class Enigma
     letter_indexes.map do |letter_index|
       n = find_n(index, shifts)
       index += 1
-      if letter_index.is_a? String
-        letter_index
-      else
-        (letter_index + n) % 27
-      end
+      shift_by_n(letter_index, n)
     end
   end
 
   def decrypt_by_index(letter_indexes, shifts)
     index = 0
     letter_indexes.map do |letter_index|
-      n = find_n(index, shifts)
+      n = find_n(index, shifts) * -1
       index += 1
-      if letter_index.is_a? String
-        letter_index
-      else
-        (letter_index - n) % 27
-      end
+      shift_by_n(letter_index, n)
+    end
+  end
+
+  def shift_by_n(index, n)
+    if index.is_a? String
+      index
+    else
+      (index + n) % 27
     end
   end
 
@@ -88,12 +88,12 @@ class Enigma
   end
 
   def shifts_from_codebreaker(message, codebreaker)
-    last_four = message[-4..].split('')
+    last_four = message[-4..].chars
     base_shifts = []
-    last_four.zip(codebreaker.split('')) do |pair|
+    last_four.zip(codebreaker.chars) do |pair|
       encrypted = letters.find_index(pair[0])
       decrypted = letters.find_index(pair[1])
-      base_shifts << encrypted- decrypted
+      base_shifts << encrypted - decrypted
     end
     shift_position = 4 - (message.length % 4)
     base_shifts.rotate(shift_position)
@@ -108,7 +108,7 @@ class Enigma
   def find_shift_keys(shifts, offsets)
     all_possible_keys = possible_keys_by_position(shifts, offsets)
     formatted_keys = all_possible_keys.map do |keys|
-      keys.map {|key| key.to_s.rjust(2, '0')}
+      keys.map { |key| key.to_s.rjust(2, '0') }
     end
     shift_keys = Hash.new('')
     formatted_keys[0].find do |key_a|
@@ -146,7 +146,7 @@ class Enigma
     normalized_shifts = normalize(shifts)
     keys = []
     normalized_shifts.zip(offsets) do |pair|
-      shift_key = pair[0] - pair [1]
+      shift_key = pair[0] - pair[1]
       keys << shift_key
     end
     keys
@@ -154,12 +154,8 @@ class Enigma
 
   def normalize(shifts)
     shifts.map do |shift|
-      while shift < 0
-        shift += 27
-      end
-      while shift > 27
-        shift -= 27
-      end
+      shift += 27 while shift.negative?
+      shift -= 27 while shift > 27
       shift
     end
   end
