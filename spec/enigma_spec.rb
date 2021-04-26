@@ -1,5 +1,6 @@
 require 'date'
 require './lib/enigma'
+require './lib/key_breaker'
 
 describe Enigma do
   describe '#initialize' do
@@ -130,25 +131,23 @@ describe Enigma do
     end
   end
 
-  describe '#encrypt_by_index' do
-    it 'returns an array of encrypted letter indexes' do
+  describe '#update_by_index' do
+    it 'returns encrypted letter indexes with positive direction' do
       enigma = Enigma.new
       shifts = [3, 27, 73, 20]
       letter_indexes = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
 
       expected = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
-      expect(enigma.encrypt_by_index(letter_indexes, shifts)).to eq expected
+      expect(enigma.update_by_index(letter_indexes, shifts)).to eq expected
     end
-  end
 
-  describe '#decrypt_by_index' do
-    it 'returns an array of decrypted letter indexes' do
+    it 'returns decrypted letter indexes with negative direction' do
       enigma = Enigma.new
       shifts = [3, 27, 73, 20]
       letter_indexes = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
 
       expected = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
-      expect(enigma.decrypt_by_index(letter_indexes, shifts)).to eq expected
+      expect(enigma.update_by_index(letter_indexes, shifts, -1)).to eq expected
     end
   end
 
@@ -219,73 +218,15 @@ describe Enigma do
     end
   end
 
-  describe '#find_key' do
-    it 'calculates the key from the date and shifts' do
+  describe '#shift_rotations' do
+    it 'calculates rotations needed for proper shift position' do
       enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      date = '291018'
+      message = 'vjqtbeaweqihssi'
+      codebreaker = ' end'
 
-      expect(enigma.find_key(shifts, date)).to eq '08304'
-    end
-
-    it 'works for any combination of shifts and date' do
-      enigma = Enigma.new
-      shifts = [3, 27, 73, 20]
-      date = '040895'
-
-      expect(enigma.find_key(shifts, date)).to eq '02715'
-    end
-  end
-
-  describe '#find_shift_keys' do
-    it 'finds shift keys using shifts and offsets' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = {
-        A: '08',
-        B: '83',
-        C: '30',
-        D: '04'
-      }
-      expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#possible_keys_by_position' do
-    it 'calculates all possible keys for each position' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = [
-        [8, 35, 62, 89],
-        [2, 29, 56, 83],
-        [3, 30, 57, 84],
-        [4, 31, 58, 85]
-      ]
-      expect(enigma.possible_keys_by_position(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#key_baselines' do
-    it 'calculates key baselines' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = [8, 2, 3, 4]
-      expect(enigma.key_baselines(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#normalize' do
-    it 'normalizes shifts to within range 0-27' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-
-      expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
+      actual = enigma.shift_rotations(message, codebreaker)
+      expected = 1
+      expect(actual).to eq expected
     end
   end
 
