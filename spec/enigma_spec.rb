@@ -152,6 +152,24 @@ describe Enigma do
     end
   end
 
+  describe '#shift_by_n' do
+    it 'shifts an index by an n value over letters' do
+      enigma = Enigma.new
+      index = 0
+      n = 3
+
+      expect(enigma.shift_by_index(index, n)).to eq 3
+    end
+
+    it 'returns the index if it is not a letter or space' do
+      enigma = Enigma.new
+      index = '!'
+      n = 3
+
+      expect(enigma.shift_by_index(index, n)).to eq '!'
+    end
+  end
+
   describe '#convert_to_indexes' do
     it 'converts a string into an array of indexes' do
       enigma = Enigma.new
@@ -225,11 +243,11 @@ describe Enigma do
       offsets = [6, 3, 2, 4]
 
       expected = {
-                  A: "08",
-                  B: "83",
-                  C: "30",
-                  D: "04"
-                  }
+        A: '08',
+        B: '83',
+        C: '30',
+        D: '04'
+      }
       expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
     end
   end
@@ -241,11 +259,11 @@ describe Enigma do
       offsets = [6, 3, 2, 4]
 
       expected = [
-                  [8, 35, 62, 89],
-                  [2, 29, 56, 83],
-                  [3, 30, 57, 84],
-                  [4, 31, 58, 85]
-                ]
+        [8, 35, 62, 89],
+        [2, 29, 56, 83],
+        [3, 30, 57, 84],
+        [4, 31, 58, 85]
+      ]
       expect(enigma.possible_keys_by_position(shifts, offsets)).to eq expected
     end
   end
