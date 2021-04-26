@@ -29,10 +29,10 @@ describe KeyBreaker do
   describe '#find_true_keys' do
     it 'finds true shift keys using formatted sets of possible keys' do
       possible_keys = [
-        ["08", "35", "62", "89"],
-        ["02", "29", "56", "83"],
-        ["03", "30", "57", "84"],
-        ["04", "31", "58", "85"]
+        ['08', '35', '62', '89'],
+        ['02', '29', '56', '83'],
+        ['03', '30', '57', '84'],
+        ['04', '31', '58', '85']
       ]
 
       expected = {
