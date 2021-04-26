@@ -10,11 +10,11 @@ This project will be assessed based on 5 basic categories. Below are self-assess
 
 ### Functionality
 
-Enigma can crack codes! Given more time for the project, I would have liked to be able to better handle edge cases, such as providing better error messages prompting a user who, for example, inputs the wrong number of arguments for one of my runner files. However, I believe that based on the spec given, I have implemented all required and optional functionality.
+`Enigma` can crack codes! All CLIs have been implemented (encryption, decryption, code-cracking). Given more time for the project, I would have liked to be able to better handle edge cases, such as providing better error messages prompting a user who, for example, inputs the wrong number of arguments for one of my runner files. However, I believe that based on the spec given, I have implemented all required and optional functionality.
 
 ### Object-Oriented Programming
 
-I have implemented one module, `Keyable`, which completes Enigma's optional inputs (necessary for using the key) when those are not provided. I created a module here since it will be called several times throughout Enigma and could, in a future case, also be used to help prompt users for proper inputs or generate inputs in the runner files. Its methods are independent of the `Enigma` class, so it could be used in other situations, which made a module seem like the proper choice here.
+I have implemented one module, `Keyable`, which completes `Enigma`'s optional inputs (necessary for using the key) when those are not provided. I created a module here since it will be called several times throughout `Enigma` and could, in a future case, also be used to help prompt users for proper inputs or generate inputs in the runner files. Its methods are independent of the `Enigma` class, so it could be used in other situations, which made a module seem like the proper choice here.
 
 I did not use inheritance in this project, as there was no logical situation where I needed 3+ classes to inherit behaviors from a parent class.
 
@@ -34,4 +34,4 @@ SimpleCov shows test coverage at 100.00%:
 
 ### Version Control
 
-Overall, I was pleased with my git/GitHub workflow. The project has 100+ commits over 9 pull requests. I used GitHub's project tracker to help organize chunks of effort into Issues and Milestones, which I completed in sequence.
+Overall, I am pleased with my git/GitHub workflow. The project has 100+ commits over 9 pull requests. I used GitHub's project tracker to help organize chunks of effort into Issues and Milestones, which I completed in sequence.
