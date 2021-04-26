@@ -26,10 +26,14 @@ describe KeyBreaker do
     end
   end
 
-  describe '#find_shift_keys' do
-    it 'finds shift keys using shifts and offsets' do
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
+  describe '#find_true_keys' do
+    it 'finds true shift keys using formatted sets of possible keys' do
+      possible_keys = [
+        ["08", "35", "62", "89"],
+        ["02", "29", "56", "83"],
+        ["03", "30", "57", "84"],
+        ["04", "31", "58", "85"]
+      ]
 
       expected = {
         A: '08',
@@ -37,7 +41,7 @@ describe KeyBreaker do
         C: '30',
         D: '04'
       }
-      expect(KeyBreaker.find_shift_keys(shifts, offsets)).to eq expected
+      expect(KeyBreaker.find_true_keys(possible_keys)).to eq expected
     end
   end
 
