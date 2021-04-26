@@ -1,9 +1,6 @@
 class KeyBreaker
   def self.find_key(shifts, offsets)
     all_possible_keys = possible_keys_by_position(shifts, offsets)
-    # formatted_keys = all_possible_keys.map do |keys|
-    #   format_keys(keys)
-    # end
     formatted_keys = all_possible_keys.map { |keys| format_keys(keys) }
     keys = find_true_keys(formatted_keys)
     keys[:A] + keys[:B][1] + keys[:C][1] + keys[:D][1]
