@@ -24,7 +24,7 @@ class Enigma
   def crack(message, date = Keyable.date_today)
     codebreaker = ' end'
     shifts = shifts_from_codebreaker(message, codebreaker)
-    key = get_key(shifts, date)
+    key = find_key(shifts, date)
     decrypt(message, key, date)
   end
 
@@ -99,17 +99,13 @@ class Enigma
     base_shifts.rotate(shift_position)
   end
 
-  def get_key(shifts, date)
+  def find_key(shifts, date)
     offsets = shift_offsets(date)
-    # normalized_keys = shifts.map do |shift|
-    #   while shift < 0
-    #     shift += 27
-    #   end
-    #   while shift > 27
-    #     shift -= 27
-    #   end
-    #     shift
-    # end
+    keys = find_shift_keys(shifts, offsets)
+    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
+  end
+
+  def find_shift_keys(shifts, offsets)
     normalized_shifts = normalize(shifts)
     keys = []
     normalized_shifts.zip(offsets) do |pair|
@@ -159,7 +155,7 @@ class Enigma
       a[1] == b[0] && b[1] == c[0] && c[1] == key_d[0]
     end
     final_keys << d
-    final_keys[0] + final_keys[1][1] + final_keys[2][1] + final_keys[3][1]
+    final_keys
   end
 
   def normalize(shifts)

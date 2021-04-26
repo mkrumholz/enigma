@@ -218,15 +218,6 @@ describe Enigma do
     end
   end
 
-  describe '#normalize' do
-    it 'normalizes shifts to within range 0-27' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-
-      expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
-    end
-  end
-
   describe '#find_shift_keys' do
     it 'finds shift keys using shifts and offsets' do
       enigma = Enigma.new
@@ -235,6 +226,15 @@ describe Enigma do
 
       expected = ["08", "83", "30", "04"]
       expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
+    end
+  end
+
+  describe '#normalize' do
+    it 'normalizes shifts to within range 0-27' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+
+      expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
     end
   end
 
