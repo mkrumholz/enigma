@@ -30,7 +30,7 @@ describe Keyable do
       allow(Date).to receive(:today) { Date.parse('2021-04-23') }
       key = Keyable.date_today
 
-      expect(key).to eq '042321'
+      expect(key).to eq '230421'
     end
   end
 end
