@@ -50,13 +50,14 @@ describe KeyBreaker do
       shifts = [14, 5, 5, -19]
       offsets = [6, 3, 2, 4]
 
+      actual = KeyBreaker.possible_keys_by_position(shifts, offsets)
       expected = [
         [8, 35, 62, 89],
         [2, 29, 56, 83],
         [3, 30, 57, 84],
         [4, 31, 58, 85]
       ]
-      expect(KeyBreaker.possible_keys_by_position(shifts, offsets)).to eq expected
+      expect(actual).to eq expected
     end
   end
 
