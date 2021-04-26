@@ -218,6 +218,15 @@ describe Enigma do
     end
   end
 
+  describe '#normalize' do
+    it 'normalizes shifts to within range 0-27' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+
+      expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
+    end
+  end
+
   describe '#get_shifts' do
     it 'calculates the four shifts' do
       enigma = Enigma.new
