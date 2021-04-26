@@ -102,63 +102,44 @@ class Enigma
   def find_key(shifts, date)
     offsets = shift_offsets(date)
     keys = find_shift_keys(shifts, offsets)
-    keys[0] + keys[1][1] + keys[2][1] + keys[3][1]
+    keys[:A] + keys[:B][1] + keys[:C][1] + keys[:D][1]
   end
 
   def find_shift_keys(shifts, offsets)
-    base_keys = key_baselines(shifts, offsets)
-    # normalized_shifts = normalize(shifts)
-    # keys = []
-    # normalized_shifts.zip(offsets) do |pair|
-    #   shift_key = pair[0] - pair [1]
-    #   keys << shift_key
-    # end
-
-    # all_possible_keys = possible_keys_by_position(base_keys)
-    set = (0..100).to_a
-    possible_keys = base_keys.map do |key|
-      possibilities = set.find_all do |num|
-        num % 27 == key
-      end
-      if possibilities.length.zero?
-        [27]
-      else
-        possibilities
-      end
+    all_possible_keys = possible_keys_by_position(shifts, offsets)
+    formatted_keys = all_possible_keys.map do |keys|
+      keys.map {|key| key.to_s.rjust(2, '0')}
     end
-    string_keys = possible_keys.map do |array|
-      array.map {|shift| shift.to_s.rjust(2, '0')}
-    end
-    final_keys = []
-    a = string_keys[0].find do |key_a|
-      string_keys[1].find do |key_b|
-        string_keys[2].find do |key_c|
-          string_keys[3].find do |key_d|
+    shift_keys = Hash.new('')
+    formatted_keys[0].find do |key_a|
+      shift_keys[:A] = key_a
+      formatted_keys[1].find do |key_b|
+        shift_keys[:B] = key_b
+        formatted_keys[2].find do |key_c|
+          shift_keys[:C] = key_c
+          formatted_keys[3].find do |key_d|
+            shift_keys[:D] = key_d
             key_a[1] == key_b[0] && key_b[1] == key_c[0] && key_c[1] == key_d[0]
           end
         end
       end
     end
-    final_keys << a
-    b = string_keys[1].find do |key_b|
-      string_keys[2].find do |key_c|
-        string_keys[3].find do |key_d|
-          a[1] == key_b[0] && key_b[1] == key_c[0] && key_c[1] == key_d[0]
-        end
+    shift_keys
+  end
+
+  def possible_keys_by_position(shifts, offsets)
+    base_keys = key_baselines(shifts, offsets)
+    set = (0..100).to_a
+    base_keys.map do |key|
+      possible_keys = set.find_all do |num|
+        num % 27 == key
+      end
+      if possible_keys.length.zero?
+        [27]
+      else
+        possible_keys
       end
     end
-    final_keys << b
-    c = string_keys[2].find do |key_c|
-      string_keys[3].find do |key_d|
-        a[1] == b[0] && b[1] == key_c[0] && key_c[1] == key_d[0]
-      end
-    end
-    final_keys << c
-    d = string_keys[3].find do |key_d|
-      a[1] == b[0] && b[1] == c[0] && c[1] == key_d[0]
-    end
-    final_keys << d
-    final_keys
   end
 
   def key_baselines(shifts, offsets)
@@ -169,7 +150,7 @@ class Enigma
       keys << shift_key
     end
     keys
-  end 
+  end
 
   def normalize(shifts)
     shifts.map do |shift|

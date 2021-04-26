@@ -224,8 +224,29 @@ describe Enigma do
       shifts = [14, 5, 5, -19]
       offsets = [6, 3, 2, 4]
 
-      expected = ["08", "83", "30", "04"]
+      expected = {
+                  A: "08",
+                  B: "83",
+                  C: "30",
+                  D: "04"
+                  }
       expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
+    end
+  end
+
+  describe '#possible_keys_by_position' do
+    it 'calculates all possible keys for each position' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+      offsets = [6, 3, 2, 4]
+
+      expected = [
+                  [8, 35, 62, 89],
+                  [2, 29, 56, 83],
+                  [3, 30, 57, 84],
+                  [4, 31, 58, 85]
+                ]
+      expect(enigma.possible_keys_by_position(shifts, offsets)).to eq expected
     end
   end
 
