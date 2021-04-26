@@ -130,6 +130,16 @@ describe Enigma do
     end
   end
 
+  describe '#get_key' do
+    it 'calculates the key from the date and shifts' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+      date = '291018'
+
+      expect(enigma.get_key(shifts, date)).to eq '08304'
+    end
+  end
+
   describe '#encrypt_by_index' do
     it 'returns an array of encrypted letter indexes' do
       enigma = Enigma.new
