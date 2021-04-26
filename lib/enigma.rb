@@ -22,15 +22,17 @@ class Enigma
   end
 
   def crack(message, date = Keyable.date_today)
-    last_four = message[-4..].split('')
-    base_shifts = []
-    last_four.zip(' end'.split('')) do |pair|
-      encrypted = letters.find_index(pair[0])
-      decrypted = letters.find_index(pair[1])
-      base_shifts << encrypted - decrypted
-    end
-    shift_position = 4 - (message.length % 4)
-    shifts = base_shifts.rotate(shift_position)
+    # last_four = message[-4..].split('')
+    # base_shifts = []
+    # last_four.zip(' end'.split('')) do |pair|
+    #   encrypted = letters.find_index(pair[0])
+    #   decrypted = letters.find_index(pair[1])
+    #   base_shifts << encrypted - decrypted
+    # end
+    # shift_position = 4 - (message.length % 4)
+    # shifts = base_shifts.rotate(shift_position)
+    codebreaker = ' end'
+    shifts = shifts_from_codebreaker(message, codebreaker)
 
     letter_indexes = convert_to_indexes(message)
     decryption = decrypt_by_index(letter_indexes, shifts)
@@ -97,6 +99,18 @@ class Enigma
       shifts[3]
     end
   end
+
+  def shifts_from_codebreaker(message, codebreaker)
+    last_four = message[-4..].split('')
+    base_shifts = []
+    last_four.zip(codebreaker.split('')) do |pair|
+      encrypted = letters.find_index(pair[0])
+      decrypted = letters.find_index(pair[1])
+      base_shifts << encrypted - decrypted
+    end
+    shift_position = 4 - (message.length % 4)
+    base_shifts.rotate(shift_position)
+  end 
 
   def get_key(shifts, date)
     offsets = shift_offsets(date)
