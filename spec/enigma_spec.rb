@@ -218,14 +218,14 @@ describe Enigma do
     end
   end
 
-  describe '#rotate_shift_position' do
-    it 'rotates shifts to correct positioning (A shift first)' do
+  describe '#shift_rotations' do
+    it 'calculates rotations needed for proper shift position' do
       enigma = Enigma.new
       message = 'vjqtbeaweqihssi'
-      shifts = [-19, 14, 5, 5]
+      codebreaker = ' end'
 
-      actual = enigma.rotate_shift_position(shifts)
-      expected = [14, 5, 5, -19]
+      actual = enigma.shift_rotations(message, codebreaker)
+      expected = 1
       expect(actual).to eq expected
     end
   end

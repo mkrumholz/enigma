@@ -40,6 +40,7 @@ class Enigma
 
   def shift_by_n(index, n)
     return index if index.is_a? String
+
     (index + n) % 27
   end
 
@@ -81,8 +82,13 @@ class Enigma
       decrypted = letters.find_index(pair[1])
       base_shifts << encrypted - decrypted
     end
-    shift_position = 4 - (message.length % 4)
-    base_shifts.rotate(shift_position)
+    rotations = shift_rotations(message, codebreaker)
+    base_shifts.rotate(rotations)
+  end
+
+  def shift_rotations(message, codebreaker)
+    position = codebreaker.length
+    position - (message.length % position)
   end
 
   def get_shifts(key, date)
