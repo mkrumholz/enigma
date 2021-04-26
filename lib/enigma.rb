@@ -55,11 +55,8 @@ class Enigma
   def convert_to_indexes(message)
     message = message.downcase.chars
     message.map do |letter|
-      if letters.include?(letter)
-        letters.find_index(letter)
-      else
-        letter
-      end
+      letter = letters.find_index(letter) if letters.include?(letter)
+      letter
     end
   end
 
