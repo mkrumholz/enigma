@@ -130,16 +130,6 @@ describe Enigma do
     end
   end
 
-  describe '#get_key' do
-    it 'calculates the key from the date and shifts' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      date = '291018'
-
-      expect(enigma.get_key(shifts, date)).to eq '08304'
-    end
-  end
-
   describe '#encrypt_by_index' do
     it 'returns an array of encrypted letter indexes' do
       enigma = Enigma.new
@@ -196,6 +186,35 @@ describe Enigma do
       shifts = [3, 27, 73, 20]
 
       expect(enigma.find_n(index, shifts)).to eq 73
+    end
+  end
+
+  describe '#shifts_from_codebreaker' do
+    it 'calculates the four shifts' do
+      enigma = Enigma.new
+      message = 'vjqtbeaweqihssi'
+      codebreaker = ' end'
+
+      expected = [14, 5, 5, -19]
+      expect(enigma.shifts_from_codebreaker(message, codebreaker)).to eq expected
+    end
+  end
+
+  describe '#get_key' do
+    it 'calculates the key from the date and shifts' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+      date = '291018'
+
+      expect(enigma.get_key(shifts, date)).to eq '08304'
+    end
+
+    it 'works for any combination of shifts and date' do
+      enigma = Enigma.new
+      shifts = [3, 27, 73, 20]
+      date = '040895'
+
+      expect(enigma.get_key(shifts, date)).to eq '02715'
     end
   end
 
