@@ -73,4 +73,13 @@ describe KeyBreaker do
       expect(KeyBreaker.normalize(shifts)).to eq [14, 5, 5, 8]
     end
   end
+
+  describe '#format_keys' do
+    it 'formats keys as strings with zero padding on the left' do
+      keys = [6, 3, 2, 4]
+
+      expected = ['06', '03', '02', '04']
+      expect(KeyBreaker.format_keys(keys)).to eq expected
+    end
+  end
 end
