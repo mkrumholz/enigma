@@ -48,11 +48,8 @@ class Enigma
   end
 
   def shift_by_n(index, n)
-    if index.is_a? String
-      index
-    else
-      (index + n) % 27
-    end
+    return index if index.is_a? String
+    (index + n) % 27
   end
 
   def convert_to_indexes(message)
