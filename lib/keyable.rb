@@ -6,6 +6,6 @@ module Keyable
 
   def self.date_today
     date = Date.today
-    date.strftime('%m%d%y')
+    date.strftime('%d%m%y')
   end
 end
