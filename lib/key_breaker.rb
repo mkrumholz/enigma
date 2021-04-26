@@ -30,7 +30,7 @@ class KeyBreaker
     base_keys = key_baselines(shifts, offsets)
     set = (0..100).to_a
     base_keys.map do |key|
-      possible_keys = set.find_all do |num|
+      set.find_all do |num|
         key % 27 == num % 27
       end
     end
