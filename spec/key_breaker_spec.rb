@@ -1,5 +1,5 @@
 require 'date'
-require './lib/enigma'
+require './lib/key_breaker'
 
 describe KeyBreaker do
   describe '#initialize' do
