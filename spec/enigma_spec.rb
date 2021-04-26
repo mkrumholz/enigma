@@ -158,7 +158,7 @@ describe Enigma do
       index = 0
       n = 3
 
-      expect(enigma.shift_by_index(index, n)).to eq 3
+      expect(enigma.shift_by_n(index, n)).to eq 3
     end
 
     it 'returns the index if it is not a letter or space' do
@@ -166,7 +166,7 @@ describe Enigma do
       index = '!'
       n = 3
 
-      expect(enigma.shift_by_index(index, n)).to eq '!'
+      expect(enigma.shift_by_n(index, n)).to eq '!'
     end
   end
 
