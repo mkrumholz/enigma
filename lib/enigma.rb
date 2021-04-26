@@ -106,14 +106,17 @@ class Enigma
   end
 
   def find_shift_keys(shifts, offsets)
-    normalized_shifts = normalize(shifts)
-    keys = []
-    normalized_shifts.zip(offsets) do |pair|
-      shift_key = pair[0] - pair [1]
-      keys << shift_key
-    end
+    base_keys = key_baselines(shifts, offsets)
+    # normalized_shifts = normalize(shifts)
+    # keys = []
+    # normalized_shifts.zip(offsets) do |pair|
+    #   shift_key = pair[0] - pair [1]
+    #   keys << shift_key
+    # end
+
+    # all_possible_keys = possible_keys_by_position(base_keys)
     set = (0..100).to_a
-    possible_keys = keys.map do |key|
+    possible_keys = base_keys.map do |key|
       possibilities = set.find_all do |num|
         num % 27 == key
       end
@@ -157,6 +160,16 @@ class Enigma
     final_keys << d
     final_keys
   end
+
+  def key_baselines(shifts, offsets)
+    normalized_shifts = normalize(shifts)
+    keys = []
+    normalized_shifts.zip(offsets) do |pair|
+      shift_key = pair[0] - pair [1]
+      keys << shift_key
+    end
+    keys
+  end 
 
   def normalize(shifts)
     shifts.map do |shift|
