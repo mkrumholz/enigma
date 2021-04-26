@@ -229,6 +229,17 @@ describe Enigma do
     end
   end
 
+  describe '#key_baselines' do
+    it 'calculates key baselines' do
+      enigma = Enigma.new
+      shifts = [14, 5, 5, -19]
+      offsets = [6, 3, 2, 4]
+
+      expected = [8, 2, 3, 4]
+      expect(enigma.key_baselines(shifts, offsets)).to eq expected
+    end
+  end
+
   describe '#normalize' do
     it 'normalizes shifts to within range 0-27' do
       enigma = Enigma.new
