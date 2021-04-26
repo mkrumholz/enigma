@@ -6,7 +6,7 @@ class Enigma
   def encrypt(message, key = Keyable.random_key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
-    encrypted_indexes = encrypt_by_index(letter_indexes, shifts)
+    encrypted_indexes = update_by_index(letter_indexes, shifts)
     { encryption: convert_to_string(encrypted_indexes),
       key: key,
       date: date }
@@ -15,7 +15,7 @@ class Enigma
   def decrypt(message, key, date = Keyable.date_today)
     letter_indexes = convert_to_indexes(message)
     shifts = get_shifts(key, date)
-    decrypted_indexes = decrypt_by_index(letter_indexes, shifts)
+    decrypted_indexes = update_by_index(letter_indexes, shifts, -1)
     { decryption: convert_to_string(decrypted_indexes),
       key: key,
       date: date }
@@ -29,19 +29,10 @@ class Enigma
     decrypt(message, key, date)
   end
 
-  def encrypt_by_index(letter_indexes, shifts)
+  def update_by_index(letter_indexes, shifts, direction = 1)
     index = 0
     letter_indexes.map do |letter_index|
-      n = find_n(index, shifts)
-      index += 1
-      shift_by_n(letter_index, n)
-    end
-  end
-
-  def decrypt_by_index(letter_indexes, shifts)
-    index = 0
-    letter_indexes.map do |letter_index|
-      n = find_n(index, shifts) * -1
+      n = find_n(index, shifts) * direction
       index += 1
       shift_by_n(letter_index, n)
     end

@@ -131,25 +131,23 @@ describe Enigma do
     end
   end
 
-  describe '#encrypt_by_index' do
-    it 'returns an array of encrypted letter indexes' do
+  describe '#update_by_index' do
+    it 'returns encrypted letter indexes with positive direction' do
       enigma = Enigma.new
       shifts = [3, 27, 73, 20]
       letter_indexes = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
 
       expected = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
-      expect(enigma.encrypt_by_index(letter_indexes, shifts)).to eq expected
+      expect(enigma.update_by_index(letter_indexes, shifts)).to eq expected
     end
-  end
 
-  describe '#decrypt_by_index' do
-    it 'returns an array of decrypted letter indexes' do
+    it 'returns decrypted letter indexes with negative direction' do
       enigma = Enigma.new
       shifts = [3, 27, 73, 20]
       letter_indexes = [10, 4, 3, 4, 17, 26, 14, 7, 20, 11, 22]
 
       expected = [7, 4, 11, 11, 14, 26, 22, 14, 17, 11, 3]
-      expect(enigma.decrypt_by_index(letter_indexes, shifts)).to eq expected
+      expect(enigma.update_by_index(letter_indexes, shifts, -1)).to eq expected
     end
   end
 
