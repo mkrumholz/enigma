@@ -1,5 +1,6 @@
 require 'date'
 require './lib/enigma'
+require './lib/key_breaker'
 
 describe Enigma do
   describe '#initialize' do
@@ -216,76 +217,6 @@ describe Enigma do
       actual = enigma.shifts_from_codebreaker(message, codebreaker)
       expected = [14, 5, 5, -19]
       expect(actual).to eq expected
-    end
-  end
-
-  describe '#find_key' do
-    it 'calculates the key from the date and shifts' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      date = '291018'
-
-      expect(enigma.find_key(shifts, date)).to eq '08304'
-    end
-
-    it 'works for any combination of shifts and date' do
-      enigma = Enigma.new
-      shifts = [3, 27, 73, 20]
-      date = '040895'
-
-      expect(enigma.find_key(shifts, date)).to eq '02715'
-    end
-  end
-
-  describe '#find_shift_keys' do
-    it 'finds shift keys using shifts and offsets' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = {
-        A: '08',
-        B: '83',
-        C: '30',
-        D: '04'
-      }
-      expect(enigma.find_shift_keys(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#possible_keys_by_position' do
-    it 'calculates all possible keys for each position' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = [
-        [8, 35, 62, 89],
-        [2, 29, 56, 83],
-        [3, 30, 57, 84],
-        [4, 31, 58, 85]
-      ]
-      expect(enigma.possible_keys_by_position(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#key_baselines' do
-    it 'calculates key baselines' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-      offsets = [6, 3, 2, 4]
-
-      expected = [8, 2, 3, 4]
-      expect(enigma.key_baselines(shifts, offsets)).to eq expected
-    end
-  end
-
-  describe '#normalize' do
-    it 'normalizes shifts to within range 0-27' do
-      enigma = Enigma.new
-      shifts = [14, 5, 5, -19]
-
-      expect(enigma.normalize(shifts)).to eq [14, 5, 5, 8]
     end
   end
 
